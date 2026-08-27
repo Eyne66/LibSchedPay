@@ -1,0 +1,28 @@
+{
+  "cycle": {"start_date": "2026-08-24", "end_date": "2026-08-30"},
+  "days": [
+    {"date": "2026-08-24", "label": "周一"},
+    {"date": "2026-08-25", "label": "周二"}
+  ],
+  "shifts": [
+    {"id": "morning", "name": "早班", "duration_hours": 2, "required_people": 2},
+    {"id": "afternoon", "name": "下午班", "duration_hours": 2, "required_people": 2},
+    {"id": "evening", "name": "晚班", "duration_hours": 3, "required_people": 3}
+  ],
+  "people": [
+    {
+      "name": "甲",
+      "unavailable": [{"date": "2026-08-25", "shift_id": "afternoon"}]
+    },
+    {"name": "乙", "unavailable": []},
+    {"name": "丙", "unavailable": []}
+  ],
+  "assignments": [
+    {"date": "2026-08-24", "shift_id": "morning", "people": ["甲", "乙"]},
+    {"date": "2026-08-24", "shift_id": "afternoon", "people": ["甲", "丙"]},
+    {"date": "2026-08-24", "shift_id": "evening", "people": ["甲", "乙", "丙"]},
+    {"date": "2026-08-25", "shift_id": "morning", "people": ["乙", "丙"]},
+    {"date": "2026-08-25", "shift_id": "afternoon", "people": ["乙"]},
+    {"date": "2026-08-25", "shift_id": "evening", "people": ["甲", "乙", "丙"]}
+  ]
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>书库工作台</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/output.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">BOOK LIBRARY WORKBENCH</p>
+        <h1>书库工作台</h1>
+        <p class="subtitle">只做两件事：把排班表和转账表可靠地做出来。</p>
+      </div>
+      <div class="status-pill" id="status">等待开始</div>
+    </header>
+
+    <section class="conversation-card">
+      <div class="section-label">工作入口</div>
+      <div class="mode-picker" id="modePicker">
+        <button class="mode-choice schedule-choice" data-mode="schedule">
+          <span class="choice-number">01</span>
+          <span><strong>做排班表</strong><small>班次、人员、约束、工时</small></span>
+        </button>
+        <button class="mode-choice settlement-choice" data-mode="settlement">
+          <span class="choice-number">02</span>
+          <span><strong>做转账表</strong><small>实际工时、下发工时、差额</small></span>
+        </button>
+      </div>
+      <div class="chat-log" id="chatLog" aria-live="polite">
+        <div class="message assistant"><span class="message-tag">工作台</span><p>你现在要做哪一张表？也可以直接用下面的输入框说“做排班表”或“做6月转账表”。</p></div>
+      </div>
+      <div class="chat-compose">
+        <textarea id="chatInput" placeholder="例如：做排班表；或：做6月转账表，实际工时如下……"></textarea>
+        <button id="sendChat" class="primary-button">继续</button>
+      </div>
+      <p class="voice-note">语音输入使用你电脑或手机自带的语音键盘；工作台只接收识别后的文字。</p>
+    </section>
+
+    <section class="work-card hidden" id="workCard">
+      <div class="work-head">
+        <div>
+          <p class="eyebrow" id="workEyebrow">01 / SCHEDULE</p>
+          <h2 id="workTitle">排班表</h2>
+          <p class="work-description" id="workDescription">按步骤收集必要信息，生成草稿后由你确认。</p>
+        </div>
+        <button class="text-button" id="restartWork">重新开始</button>
+      </div>
+
+      <div class="progress-line" id="progressLine"></div>
+      <div class="step-box">
+        <div class="step-kicker" id="stepKicker"></div>
+        <h3 id="stepTitle"></h3>
+        <p class="step-help" id="stepHelp"></p>
+        <div id="stepContent"></div>
+      </div>
+      <div class="workspace-summary" id="workspaceSummary"></div>
+      <div class="output-result hidden" id="outputResult"></div>
+    </section>
+
+    <footer>固定脚本负责计算和校验；你负责确认规则、修改草稿、最后输出。</footer>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
