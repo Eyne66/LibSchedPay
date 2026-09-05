@@ -11,9 +11,9 @@
   <main class="app-shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">BOOK LIBRARY WORKBENCH</p>
+        <p class="eyebrow">LIBSCHEDPAY / WORKBENCH</p>
         <h1>书库工作台</h1>
-        <p class="subtitle">只做两件事：把排班表和转账表可靠地做出来。</p>
+        <p class="subtitle">排班安排、实际工时统计、工时转账配平。按步骤确认，随时修改，下载 Excel。</p>
       </div>
       <div class="status-pill" id="status">等待开始</div>
     </header>
@@ -23,21 +23,21 @@
       <div class="mode-picker" id="modePicker">
         <button class="mode-choice schedule-choice" data-mode="schedule">
           <span class="choice-number">01</span>
-          <span><strong>做排班表</strong><small>班次、人员、约束、工时</small></span>
+          <span><strong>排班</strong><small>每日岗位 → 人员与限制 → 每周排班表</small></span>
         </button>
         <button class="mode-choice settlement-choice" data-mode="settlement">
           <span class="choice-number">02</span>
-          <span><strong>做转账表</strong><small>实际工时、下发工时、差额</small></span>
+          <span><strong>工时统计与转账</strong><small>录入签到工时 → 统计表 → 下发与配平</small></span>
         </button>
       </div>
-      <div class="chat-log" id="chatLog" aria-live="polite">
+      <details class="prompt-panel quick-input"><summary>快捷文字输入与操作记录</summary><div class="chat-log" id="chatLog" aria-live="polite">
         <div class="message assistant"><span class="message-tag">工作台</span><p>你现在要做哪一张表？也可以直接用下面的输入框说“做排班表”或“做6月转账表”。</p></div>
       </div>
       <div class="chat-compose">
-        <textarea id="chatInput" placeholder="例如：做排班表；或：做6月转账表，实际工时如下……"></textarea>
+        <textarea id="chatInput" placeholder="例如：做排班表；或：做6月转账表，时间范围 2026-09-01 到 2026-09-30"></textarea>
         <button id="sendChat" class="primary-button">继续</button>
       </div>
-      <p class="voice-note">语音输入使用你电脑或手机自带的语音键盘；工作台只接收识别后的文字。</p>
+      <p class="voice-note">语音输入使用你电脑或手机自带的语音键盘；工作台只接收识别后的文字。请在步骤表格里确认数值。</p></details>
     </section>
 
     <section class="work-card hidden" id="workCard">
@@ -61,7 +61,7 @@
       <div class="output-result hidden" id="outputResult"></div>
     </section>
 
-    <footer>固定脚本负责计算和校验；你负责确认规则、修改草稿、最后输出。</footer>
+    <footer>每个结果都来自已确认的输入与固定计算。输入数据不会展示给其他访问者。</footer>
   </main>
   <script src="/static/app.js"></script>
 </body>

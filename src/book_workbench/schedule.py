@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+from copy import deepcopy
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 from typing import Any, Iterable
+from .schedule_balance import balance_schedule
 
 
 class ScheduleValidationError(ValueError):
@@ -49,6 +51,55 @@ def _key(day: str, shift_id: str) -> tuple[str, str]:
     return day, shift_id
 
 
+def prepare_schedule_input(payload: dict[str, Any]) -> dict[str, Any]:
+    """Resolve the complete confirmed rules before filtering or calculating.
+
+    Explicit ``constraints`` is authoritative for web requests. Legacy callers
+    without it continue to supply ``people[].unavailable``. Only whitespace is
+    normalised: names are never guessed or silently dropped.
+    """
+    if not isinstance(payload, dict):
+        raise ScheduleValidationError("schedule input must be an object")
+    result = deepcopy(payload)
+    people = result.get("people")
+    if not isinstance(people, list) or not people:
+        return result
+    names = {}
+    for person in people:
+        if isinstance(person, dict) and person.get("name"):
+            name = str(person["name"]).strip()
+            key = _identity_name(name)
+            if key in names:
+                raise ScheduleValidationError(f"名单中有重复姓名：{name}")
+            names[key] = name
+    if "constraints" in result:
+        rules = result["constraints"]
+        if not isinstance(rules, list):
+            raise ScheduleValidationError("不可排规则必须是列表")
+        shifts = {str(s.get("id")) for s in (result.get("shifts") or []) if isinstance(s, dict)}
+        compiled = defaultdict(list)
+        for index, rule in enumerate(rules, start=1):
+            if not isinstance(rule, dict):
+                raise ScheduleValidationError(f"第{index}条不可排规则格式不正确")
+            key = _identity_name(rule.get("name", ""))
+            if key not in names:
+                raise ScheduleValidationError(f"第{index}条不可排规则的姓名不在本期名单中：{rule.get('name', '')}")
+            day = _parse_date(rule.get("date"), f"第{index}条不可排日期").isoformat()
+            shift_id = str(rule.get("shift_id", ""))
+            if shift_id not in shifts:
+                raise ScheduleValidationError(f"第{index}条不可排规则的班次不存在：{shift_id}")
+            slot = {"date": day, "shift_id": shift_id}
+            if slot not in compiled[key]:
+                compiled[key].append(slot)
+        for person in people:
+            if isinstance(person, dict):
+                person["unavailable"] = compiled[_identity_name(person.get("name", ""))]
+    for assignment in (result.get("assignments") or []):
+        if isinstance(assignment, dict) and isinstance(assignment.get("people"), list):
+            assignment["people"] = [names.get(_identity_name(n), str(n).strip()) for n in assignment["people"]]
+    return result
+
+
 def validate_schedule(payload: dict[str, Any]) -> dict[str, Any]:
     """Validate a confirmed schedule draft and return an auditable summary.
 
@@ -59,6 +110,7 @@ def validate_schedule(payload: dict[str, Any]) -> dict[str, Any]:
 
     if not isinstance(payload, dict):
         raise ScheduleValidationError("schedule input must be an object")
+    payload = prepare_schedule_input(payload)
     cycle = payload.get("cycle") or {}
     start = _parse_date(cycle.get("start_date"), "cycle.start_date")
     end = _parse_date(cycle.get("end_date"), "cycle.end_date")
@@ -271,6 +323,13 @@ def validate_schedule(payload: dict[str, Any]) -> dict[str, Any]:
         "warnings": warnings,
         "shift_results": shift_results,
         "people": people_summary,
+        "fairness": {
+            "average_required_hours": _render_hours(planned_hours / len(roster)),
+            "average_assigned_hours": _render_hours(filled_hours / len(roster)),
+            "minimum_hours": _render_hours(min(person_hours.get(p["name"], Decimal(0)) for p in roster.values())),
+            "maximum_hours": _render_hours(max(person_hours.get(p["name"], Decimal(0)) for p in roster.values())),
+            "hour_spread": _render_hours(max(person_hours.get(p["name"], Decimal(0)) for p in roster.values()) - min(person_hours.get(p["name"], Decimal(0)) for p in roster.values())),
+        },
         "totals": {
             "planned_slots": planned_slots,
             "filled_slots": filled_slots,
@@ -284,14 +343,16 @@ def validate_schedule(payload: dict[str, Any]) -> dict[str, Any]:
 def generate_schedule(payload: dict[str, Any]) -> dict[str, Any]:
     """Generate a deterministic, editable draft, then validate it.
 
-    This is intentionally a transparent baseline generator rather than an AI
-    decision-maker. It fills each shift with available people who currently
-    have the lowest share of their target hours. Preferences receive a small
-    score bonus. If a shift cannot be filled, the vacancy remains visible.
+    Build a complete feasible seed, then minimise hour spread across the whole
+    period using exact integer quota/flow checks. The duration mode also tries
+    balanced counts within each duration group. If the bounded search cannot
+    prove the optimum, return an explicitly marked feasible seed. Explicit
+    personal targets retain the legacy target-based heuristic.
     """
 
     if not isinstance(payload, dict):
         raise ScheduleValidationError("schedule input must be an object")
+    payload = prepare_schedule_input(payload)
     allocation_mode = str(payload.get("allocation_mode") or "total_hours")
     if allocation_mode not in {"total_hours", "by_duration"}:
         raise ScheduleValidationError("allocation_mode must be total_hours or by_duration")
@@ -428,6 +489,7 @@ def generate_schedule(payload: dict[str, Any]) -> dict[str, Any]:
                     duration_hours[shift["duration"]][name] += shift["duration"]
             assignments.append({"date": day, "shift_id": shift["id"], "people": chosen})
 
-    generated = {**payload, "assignments": assignments}
+    assignments, balance_report = balance_schedule(payload, assignments)
+    generated = {**payload, "days": days, "assignments": assignments}
     validation = validate_schedule(generated)
-    return {"schedule": generated, "validation": validation}
+    return {"schedule": generated, "validation": validation, "balance_report": balance_report}

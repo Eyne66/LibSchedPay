@@ -8,3 +8,10 @@ workbench/runtime/
 *.tmp
 *.log
 
+
+# Per-owner hosting identity and generated browser distribution
+.openai/
+dist/
+.env
+.env.*
+!.env.example

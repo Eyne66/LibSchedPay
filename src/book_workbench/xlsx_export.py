@@ -287,7 +287,7 @@ def add_public_settlement_sheet(sheet: Sheet, payload: dict[str, Any]) -> None:
             group = {"receiver": receiver, "total": 0, "items": []}
             by_receiver[receiver] = group
             groups.append(group)
-        group["total"] += hours
+        group["total"] = Decimal(str(group["total"])) + Decimal(str(hours))
         group["items"].append((payer, hours))
 
     sheet.show_gridlines = False
@@ -323,7 +323,7 @@ def add_settlement_summary_sheet(sheet: Sheet, payload: dict[str, Any]) -> None:
         sheet.set_row(index + 2, [index, person.get("name", ""), as_number(person.get("actual_hours")), person.get("notes", "")], style=3)
     total = len(people) + 3
     sheet.set_row(total, ["合计", "", "", ""], style=6)
-    sheet.set(total, 3, "", style=6, formula=f"SUM(C3:C{total - 1})", cached=sum((as_number(row.get("actual_hours")) or 0 for row in people), 0))
+    sheet.set(total, 3, "", style=6, formula=f"SUM(C3:C{total - 1})", cached=as_number(sum((Decimal(str(row.get("actual_hours"))) for row in people), Decimal("0"))))
     sheet.widths.update({1: 10, 2: 22, 3: 16, 4: 28})
     sheet.freeze_rows = 2
 
@@ -353,7 +353,7 @@ def add_schedule_sheets(schedule: dict[str, Any], validation: dict[str, Any]) ->
     for shift in shifts:
         start = row
         for slot in range(max_rows):
-            values = ["", f"{shift.get('name') or shift.get('id')}\n{shift.get('duration_hours')}小时 / 需{shift.get('required_people')}人" if slot == 0 else ""]
+            values = ["", f"{shift.get('name') or shift.get('id')}\n{shift.get('start', '')}–{shift.get('end', '')}\n{shift.get('duration_hours')}小时" if slot == 0 else ""]
             for day in days:
                 names = assignments.get((day.get("date"), shift.get("id")), [])
                 person = names[slot] if slot < len(names) else ""
@@ -424,7 +424,14 @@ def add_schedule_sheets(schedule: dict[str, Any], validation: dict[str, Any]) ->
     for column in range(1, 5):
         record.widths[column] = 18
     sheet.freeze_rows = 2
-    return [sheet, record]
+    requirements = Sheet("岗位需求", show_gridlines=False)
+    requirements.set_row(1, ["日期", "星期", "班次", "开始", "结束", "单次工时", "需要人数"], style=2)
+    for index, (day, shift) in enumerate(((day, shift) for day in days for shift in shifts), start=2):
+        required = day_requirements.get(day["date"], {}).get(shift["id"], shift["required_people"])
+        requirements.set_row(index, [day["date"], day.get("label", ""), shift.get("name", shift["id"]), shift.get("start", ""), shift.get("end", ""), as_number(shift["duration_hours"]), required], style=3)
+    requirements.widths.update({1: 18, 2: 25, 3: 16, 4: 14, 5: 14, 6: 14, 7: 14})
+    requirements.freeze_rows = 1
+    return [sheet, record, requirements]
 
 
 def add_settlement_sheets(payload: dict[str, Any]) -> list[Sheet]:
@@ -437,7 +444,7 @@ def add_settlement_sheets(payload: dict[str, Any]) -> list[Sheet]:
     for index, person in enumerate(people, start=3):
         actual = as_number(person.get("actual_hours")) or 0
         issued = as_number(person.get("issued_hours")) or 0
-        difference = actual - issued
+        difference = as_number(person.get("difference_hours")) or 0
         status = "应收" if difference > 0 else ("应转出" if difference < 0 else "无差额")
         sheet.set_row(index, [person.get("name", ""), actual, issued, difference, status, ""], style=3)
         sheet.set(index, 4, "", style=3, formula=f"B{index}-C{index}", cached=difference)

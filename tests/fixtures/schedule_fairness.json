@@ -1,0 +1,623 @@
+{
+  "input": {
+    "cycle": {
+      "start_date": "2026-09-07",
+      "end_date": "2026-09-13"
+    },
+    "shifts": [
+      {
+        "id": "morning",
+        "name": "早班",
+        "duration_hours": 2,
+        "required_people": 5
+      },
+      {
+        "id": "afternoon",
+        "name": "下午班",
+        "duration_hours": 2,
+        "required_people": 5
+      },
+      {
+        "id": "evening",
+        "name": "晚班",
+        "duration_hours": 3,
+        "required_people": 5
+      }
+    ],
+    "people": [
+      {
+        "name": "同学01",
+        "unavailable": [
+          {
+            "date": "2026-09-07",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-09",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-11",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-11",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-12",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-12",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-13",
+            "shift_id": "afternoon"
+          }
+        ]
+      },
+      {
+        "name": "同学02",
+        "unavailable": [
+          {
+            "date": "2026-09-07",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-10",
+            "shift_id": "afternoon"
+          }
+        ]
+      },
+      {
+        "name": "同学03",
+        "unavailable": [
+          {
+            "date": "2026-09-07",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-07",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-09",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-10",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-11",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-11",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-13",
+            "shift_id": "morning"
+          }
+        ]
+      },
+      {
+        "name": "同学04",
+        "unavailable": [
+          {
+            "date": "2026-09-08",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-09",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-10",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-10",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-12",
+            "shift_id": "evening"
+          }
+        ]
+      },
+      {
+        "name": "同学05",
+        "unavailable": [
+          {
+            "date": "2026-09-07",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-09",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-10",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-11",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-13",
+            "shift_id": "morning"
+          }
+        ]
+      },
+      {
+        "name": "同学06",
+        "unavailable": [
+          {
+            "date": "2026-09-07",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-07",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-09",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-10",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-12",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-13",
+            "shift_id": "evening"
+          }
+        ]
+      },
+      {
+        "name": "同学07",
+        "unavailable": [
+          {
+            "date": "2026-09-07",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-10",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-10",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-11",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-11",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-12",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-13",
+            "shift_id": "evening"
+          }
+        ]
+      },
+      {
+        "name": "同学08",
+        "unavailable": [
+          {
+            "date": "2026-09-07",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "evening"
+          },
+          {
+            "date": "2026-09-08",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-09",
+            "shift_id": "afternoon"
+          },
+          {
+            "date": "2026-09-11",
+            "shift_id": "morning"
+          },
+          {
+            "date": "2026-09-12",
+            "shift_id": "morning"
+          }
+        ]
+      },
+      {
+        "name": "同学09",
+        "unavailable": []
+      },
+      {
+        "name": "同学10",
+        "unavailable": []
+      },
+      {
+        "name": "同学11",
+        "unavailable": []
+      },
+      {
+        "name": "同学12",
+        "unavailable": []
+      },
+      {
+        "name": "同学13",
+        "unavailable": []
+      },
+      {
+        "name": "同学14",
+        "unavailable": []
+      },
+      {
+        "name": "同学15",
+        "unavailable": []
+      },
+      {
+        "name": "同学16",
+        "unavailable": []
+      },
+      {
+        "name": "同学17",
+        "unavailable": []
+      },
+      {
+        "name": "同学18",
+        "unavailable": []
+      },
+      {
+        "name": "同学19",
+        "unavailable": []
+      },
+      {
+        "name": "同学20",
+        "unavailable": []
+      },
+      {
+        "name": "同学21",
+        "unavailable": []
+      },
+      {
+        "name": "同学22",
+        "unavailable": []
+      },
+      {
+        "name": "同学23",
+        "unavailable": []
+      },
+      {
+        "name": "同学24",
+        "unavailable": []
+      },
+      {
+        "name": "同学25",
+        "unavailable": []
+      },
+      {
+        "name": "同学26",
+        "unavailable": []
+      },
+      {
+        "name": "同学27",
+        "unavailable": []
+      },
+      {
+        "name": "同学28",
+        "unavailable": []
+      },
+      {
+        "name": "同学29",
+        "unavailable": []
+      },
+      {
+        "name": "同学30",
+        "unavailable": []
+      },
+      {
+        "name": "同学31",
+        "unavailable": []
+      },
+      {
+        "name": "同学32",
+        "unavailable": []
+      },
+      {
+        "name": "同学33",
+        "unavailable": []
+      },
+      {
+        "name": "同学34",
+        "unavailable": []
+      },
+      {
+        "name": "同学35",
+        "unavailable": []
+      }
+    ]
+  },
+  "witness": [
+    {
+      "date": "2026-09-07",
+      "shift_id": "afternoon",
+      "people": [
+        "同学01",
+        "同学02",
+        "同学03",
+        "同学04",
+        "同学05"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "shift_id": "evening",
+      "people": [
+        "同学06",
+        "同学07",
+        "同学08",
+        "同学09",
+        "同学10"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "shift_id": "morning",
+      "people": [
+        "同学11",
+        "同学12",
+        "同学13",
+        "同学14",
+        "同学15"
+      ]
+    },
+    {
+      "date": "2026-09-08",
+      "shift_id": "afternoon",
+      "people": [
+        "同学16",
+        "同学17",
+        "同学18",
+        "同学19",
+        "同学20"
+      ]
+    },
+    {
+      "date": "2026-09-08",
+      "shift_id": "evening",
+      "people": [
+        "同学21",
+        "同学22",
+        "同学23",
+        "同学24",
+        "同学25"
+      ]
+    },
+    {
+      "date": "2026-09-08",
+      "shift_id": "morning",
+      "people": [
+        "同学26",
+        "同学27",
+        "同学28",
+        "同学29",
+        "同学30"
+      ]
+    },
+    {
+      "date": "2026-09-09",
+      "shift_id": "afternoon",
+      "people": [
+        "同学31",
+        "同学32",
+        "同学33",
+        "同学34",
+        "同学35"
+      ]
+    },
+    {
+      "date": "2026-09-09",
+      "shift_id": "evening",
+      "people": [
+        "同学01",
+        "同学02",
+        "同学03",
+        "同学04",
+        "同学05"
+      ]
+    },
+    {
+      "date": "2026-09-09",
+      "shift_id": "morning",
+      "people": [
+        "同学06",
+        "同学07",
+        "同学08",
+        "同学09",
+        "同学10"
+      ]
+    },
+    {
+      "date": "2026-09-10",
+      "shift_id": "afternoon",
+      "people": [
+        "同学21",
+        "同学22",
+        "同学23",
+        "同学24",
+        "同学25"
+      ]
+    },
+    {
+      "date": "2026-09-10",
+      "shift_id": "evening",
+      "people": [
+        "同学11",
+        "同学12",
+        "同学13",
+        "同学14",
+        "同学15"
+      ]
+    },
+    {
+      "date": "2026-09-10",
+      "shift_id": "morning",
+      "people": [
+        "同学16",
+        "同学17",
+        "同学18",
+        "同学19",
+        "同学20"
+      ]
+    },
+    {
+      "date": "2026-09-11",
+      "shift_id": "afternoon",
+      "people": [
+        "同学26",
+        "同学27",
+        "同学28",
+        "同学29",
+        "同学30"
+      ]
+    },
+    {
+      "date": "2026-09-11",
+      "shift_id": "evening",
+      "people": [
+        "同学31",
+        "同学32",
+        "同学33",
+        "同学34",
+        "同学35"
+      ]
+    },
+    {
+      "date": "2026-09-11",
+      "shift_id": "morning",
+      "people": [
+        "同学01",
+        "同学02",
+        "同学03",
+        "同学04",
+        "同学05"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "shift_id": "afternoon",
+      "people": [
+        "同学06",
+        "同学07",
+        "同学08",
+        "同学09",
+        "同学10"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "shift_id": "evening",
+      "people": [
+        "同学16",
+        "同学17",
+        "同学18",
+        "同学19",
+        "同学20"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "shift_id": "morning",
+      "people": [
+        "同学11",
+        "同学12",
+        "同学13",
+        "同学14",
+        "同学15"
+      ]
+    },
+    {
+      "date": "2026-09-13",
+      "shift_id": "afternoon",
+      "people": [
+        "同学21",
+        "同学22",
+        "同学23",
+        "同学24",
+        "同学25"
+      ]
+    },
+    {
+      "date": "2026-09-13",
+      "shift_id": "evening",
+      "people": [
+        "同学26",
+        "同学27",
+        "同学28",
+        "同学29",
+        "同学30"
+      ]
+    },
+    {
+      "date": "2026-09-13",
+      "shift_id": "morning",
+      "people": [
+        "同学31",
+        "同学32",
+        "同学33",
+        "同学34",
+        "同学35"
+      ]
+    }
+  ]
+}

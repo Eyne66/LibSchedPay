@@ -5,3 +5,20 @@
 .constraint-format-note{display:flex;flex-direction:column;gap:4px;margin-top:10px;padding:11px 12px;border:1px solid #c9dff2;border-radius:10px;background:var(--blue-light);color:var(--muted);font-size:12px;line-height:1.5}.constraint-format-note strong{color:var(--navy);font-size:13px}.prompt-panel{margin-top:11px;border:1px solid #e5ebf0;border-radius:10px;background:#fff}.prompt-panel summary{padding:11px 12px;color:var(--blue);font-size:13px;font-weight:750;cursor:pointer}.prompt-panel-body{padding:0 12px 12px}.prompt-panel-body .inline-note{margin-top:0}.prompt-area{width:100%;min-height:265px;margin:10px 0;font-size:12px;line-height:1.55;background:#fbfcfd;color:var(--ink)}
 .constraint-entry-head{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;color:var(--muted);font-size:12px;line-height:1.5}.constraint-entry-head strong{color:var(--navy);font-size:14px}.constraint-grid-wrap{max-height:600px}.constraint-grid{min-width:650px}.constraint-grid th:first-child{min-width:110px}.constraint-grid th:nth-child(2){min-width:82px}.constraint-grid td,.constraint-grid th{vertical-align:middle}.constraint-check-cell{text-align:center!important}.constraint-check-cell label{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap}.constraint-check-cell input{width:16px;min-width:16px;padding:0;accent-color:var(--red)}
 .template-import-box{display:flex;flex-direction:column;gap:5px;margin-top:11px;padding:12px;border:1px dashed #b8d8e8;border-radius:10px;background:#f8fcff;color:var(--muted);font-size:12px;line-height:1.5}.template-import-box strong{color:var(--navy);font-size:13px}
+
+/* Readable work surface for both desktop and phone. */
+body{font-size:16px;line-height:1.55;background:#f3f6fa}
+.app-shell{max-width:1180px;padding-top:36px}.topbar h1{font-size:32px;letter-spacing:.02em;line-height:1.4}
+.eyebrow{font-size:12px;letter-spacing:.13em}.subtitle{max-width:740px;line-height:1.7}
+.conversation-card,.work-card{box-shadow:0 3px 18px #162f4c06;border-radius:16px}
+.mode-choice{min-height:98px;border-radius:12px;padding:20px}.mode-choice strong{font-size:20px}.choice-number{font-size:16px;border-radius:10px;padding:9px;background:#e8f2fb}
+.mode-choice small,.work-description,.field,.step-help,.inline-note,.constraint-grid-help,.constraint-format-note,.constraint-grid td,.constraint-check-cell label,.template-import-box,.prompt-panel summary,.file-input,.status-pill{font-size:14px}
+.field input,.field textarea,.field select,.data-table input{font-size:16px}
+button{font-size:14px;min-height:42px}button,a,input,textarea,select,summary{outline-offset:4px}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #78acda}
+.data-table{font-size:14px}.data-table th{font-size:14px}.data-table td,.data-table th{padding:12px}
+.data-table input{min-height:42px}.data-table tbody tr:hover{background:#fafcff}.data-table th{position:sticky;top:0;z-index:1}
+.summary-item span,.output-picker-label,.output-picker-label strong,.step-kicker,small,footer{font-size:13px}.summary-item strong{font-size:21px;font-variant-numeric:tabular-nums}
+.quick-input{margin-top:18px}.quick-input .chat-log,.quick-input .chat-compose,.quick-input .voice-note{margin-left:14px;margin-right:14px}.quick-input .voice-note{margin-bottom:14px}.chat-log{max-height:180px}
+.runtime-bar{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:12px 2px;color:var(--muted);font-size:13px}.runtime-bar .warning{color:var(--red)}
+.work-card{scroll-margin-top:16px}.step-box{padding:22px}.output-result a{text-decoration:none;display:inline-flex;align-items:center}
+@media(max-width:700px){.app-shell{padding-top:22px}.topbar h1{font-size:28px}.conversation-card,.work-card{padding:16px}.step-box{padding:14px}.mode-choice{padding:16px;min-height:88px}.data-table{min-width:590px}.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.actions>button{flex-grow:1}.status-pill{white-space:normal}}

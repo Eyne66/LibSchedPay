@@ -1,0 +1,37 @@
+name: Test and reproduce browser build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Python regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Input rules and portable asset paths
+        run: node --test tests/test_ui_rules.cjs tests/test_browser_paths.cjs
+      - name: JavaScript syntax
+        run: |
+          node --check workbench/static/app.js
+          node --check workbench/static/browser_backend.js
+          node --check workbench/static/browser_worker.mjs
+      - name: Download pinned browser runtime
+        run: python scripts/download_pyodide.py
+      - name: Produce static site
+        run: python scripts/stage_browser.py
+      - name: Test the shipped Python WebAssembly runtime
+        run: node scripts/test_pyodide.mjs
